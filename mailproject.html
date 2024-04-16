@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=365px, initial-scale=1.0">
+    <title>Your Page Title</title>
+    <!-- Link to FontAwesome CSS -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Your existing CSS styles */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            min-height: 100vh;
+            background-color: #ffffff;
+            overflow-x: auto;
+            width: 365px;
+        }
+
+        .circle-container {
+            position: absolute;
+            top: 110px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 0 20px;
+            margin-top: 10px;
+            margin-left: -20px;
+        }
+
+        .circle {
+            width: 50px;
+            height: 50px;
+            background-color: #3a89f7;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            margin-top: 20px;
+            margin-left: 10px;
+        }
+
+        .circle-text {
+            margin-left: 10px;
+            font-size: 17px;
+            margin-top: 23px;
+        }
+
+
+
+        .task-bar {
+            background-color: #ffffff;
+            color: #ffffff;
+            padding: 10px;
+            margin-left: -10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 365px;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+        .bottom-task-bar {
+            background-color: #ffffff;
+            color: #000000;
+            padding: 0px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            right: 135px;
+            z-index: 1;
+            transition: background-color 0.3s;
+            margin-top: 50%;
+            /* Adjust the margin-top value */
+        }
+
+        .task-bar-icons {
+            display: flex;
+        }
+
+        .task-bar-icons a {
+            color: #000000;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .big-text {
+            margin-left: 10px;
+            font-size: 24px;
+            margin-top: 60px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .star-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            margin-left: 5px;
+        }
+
+        .label {
+            font-size: 10px;
+            background-color: #f2f2f2;
+            padding: 2px 5px;
+            border-radius: 3px;
+            position: absolute;
+            margin-top: 20px;
+            margin-left: 17px;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Arrow Button Style */
+        .arrow-button {
+            width: 0px;
+            height: 0px;
+            border: solid black;
+            border-width: 0 1px 1px 0;
+            display: inline-block;
+            padding: 3px;
+            position: absolute;
+            margin-top: -33px;
+            margin-left: 45px;
+            top: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+        }
+
+        .down {
+            transform: rotate(45deg);
+        }
+
+        .up {
+            transform: rotate(-135deg);
+            margin-top: -28px;
+        }
+
+
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24;
+        }
+
+        .reply-icon {
+            position: absolute;
+            top: 30px;
+            right: -30px;
+            font-size: 23px;
+        }
+
+        .more-icon {
+            position: absolute;
+            top: 30px;
+            right: -60px;
+            font-size: 23px;
+        }
+
+        .to-text {
+            position: absolute;
+            font-size: 15px;
+            margin-top: 45px;
+            margin-left: 70px;
+        }
+
+        /* Add the following CSS to position the icon */
+        .custom-icon {
+            position: absolute;
+            top: 55px;
+            right: -10px;
+            /* Adjust as needed */
+            font-size: 10px;
+        }
+
+        /* Optional: Customize button style */
+        .icon-button {
+            color: black;
+            padding: 10px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        /* Style for the text to be shown */
+        .hidden-text {
+            font-size: 13px;
+            display: none;
+            color: black;
+            border: 1px solid gray;
+            /* Gray border */
+            position: absolute;
+            margin-top: 90px;
+            margin-left: 20px;
+            margin-right: -60px;
+            border-radius: 5px;
+            font-family: "Aaux Next Medium", sans-serif;
+            overflow: hidden;
+            /* Prevent overflow */
+        }
+
+        /* Style for the gray text */
+        .gray-text {
+            color: gray;
+        }
+
+        /* Style for the table */
+        .info-table {
+            width: 330px;
+        }
+
+        /* Style for table columns */
+        .info-table td {
+            vertical-align: top;
+            padding: 5px;
+            padding-top: 3px;
+            max-width: 300px;
+            /* Adjust the width of table cells */
+            word-wrap: break-word;
+            /* Allow long words to wrap */
+        }
+
+        @media only screen and (max-width: 100px) {
+
+            /* Adjust padding for smaller screens */
+            .hidden-text {
+                padding-right: 5px;
+                max-width: calc(100% - 40px);
+                /* Adjust maximum width */
+                margin-left: 20px;
+                /* Adjust left margin */
+                margin-right: 20px;
+                /* Adjust right margin */
+                margin-top: 90px;
+            }
+
+            /* Allow email addresses to break in the middle */
+            .hidden-text .gray-text span.email-address {
+                overflow-wrap: break-word;
+                word-break: break-all;
+            }
+        }
+
+        /* Lock icon styles */
+        .gray-lock {
+            color: gray;
+            position: relative;
+            /* Position the lock */
+        }
+
+        .hole {
+            position: absolute;
+            /* Position the hole absolutely within the lock */
+            top: 65%;
+            /* Position the hole vertically centered */
+            left: 50%;
+            /* Position the hole horizontally centered */
+            transform: translate(-50%, -50%);
+            /* Center the hole perfectly */
+            width: 15%;
+            /* Adjust the size of the hole */
+            height: 17%;
+            /* Adjust the size of the hole */
+            background-color: white;
+            /* Color of the hole */
+            border-radius: 50%;
+            /* Make the hole circular */
+        }
+
+        .mail-text {
+            font-size: small;
+            position: absolute;
+            margin-left: 10px;
+            margin-top: 90px;
+            margin-right: 10px;
+            word-break: break-word;
+        }
+
+        .mail-text-hidden {
+            margin-top: 240px;
+        }
+
+        .body2 {
+            font-family: sans-serif;
+            margin: 0;
+            margin-left: -10px;
+            margin-top: -100px;
+            padding: 5px;
+            position: relative;
+            min-height: 100vh;
+            overflow-x: auto;
+        }
+
+        .circle-container-duplicate {
+            position: absolute;
+            top: 15%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 0 20px;
+            margin-top: 10px;
+            margin-left: -20px;
+        }
+
+        .circle-duplicate {
+            width: 50px;
+            height: 50px;
+            background-color: #f7c83a;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            margin-top: 20px;
+            margin-left: 10px;
+        }
+
+        .circle-text-duplicate {
+            margin-left: 10px;
+            font-size: 17px;
+            margin-top: 23px;
+        }
+
+
+        .reply-icon-duplicate {
+            position: absolute;
+            top: 30px;
+            right: -35px;
+            font-size: 23px;
+        }
+
+        .more-icon-duplicate {
+            position: absolute;
+            top: 30px;
+            right: -70px;
+            font-size: 23px;
+        }
+
+        .to-text-duplicate {
+            position: absolute;
+            font-size: 15px;
+            margin-top: 45px;
+            margin-left: 70px;
+        }
+
+        .arrow-button-duplicate {
+            width: 0px;
+            height: 0px;
+            border: solid black;
+            border-width: 0 1px 1px 0;
+            display: inline-block;
+            padding: 3px;
+            position: absolute;
+            margin-top: -33px;
+            margin-left: -15px;
+            top: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+        }
+
+        .down-duplicate {
+            transform: rotate(45deg);
+        }
+
+        .up-duplicate {
+            transform: rotate(-135deg);
+            margin-top: -28px;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24;
+        }
+
+        /* Style for the text to be shown */
+        .hidden-text-duplicate {
+            font-size: 13px;
+            display: none;
+            color: black;
+            border: 1px solid gray;
+            /* Gray border */
+            position: absolute;
+            margin-top: 90px;
+            margin-left: 20px;
+            margin-right: -60px;
+            border-radius: 5px;
+            font-family: "Aaux Next Medium", sans-serif;
+            overflow: hidden;
+            /* Prevent overflow */
+        }
+
+        /* Style for the table */
+        .info-table-duplicate {
+            width: 100%;
+        }
+
+        /* Style for table columns */
+        .info-table-duplicate td {
+            vertical-align: top;
+            padding: 5px;
+            max-width: 50%;
+            /* Adjust the width of table cells */
+            word-wrap: break-word;
+            /* Allow long words to wrap */
+        }
+
+        /* Lock icon styles */
+        .gray-lock-duplicate {
+            color: gray;
+            position: relative;
+            /* Position the lock */
+        }
+
+        .hole-duplicate {
+            position: absolute;
+            /* Position the hole absolutely within the lock */
+            top: 65%;
+            /* Position the hole vertically centered */
+            left: 50%;
+            /* Position the hole horizontally centered */
+            transform: translate(-50%, -50%);
+            /* Center the hole perfectly */
+            width: 15%;
+            /* Adjust the size of the hole */
+            height: 17%;
+            /* Adjust the size of the hole */
+            background-color: white;
+            /* Color of the hole */
+            border-radius: 50%;
+            /* Make the hole circular */
+        }
+
+        .approved-text-duplicate {
+            font-size: small;
+            position: absolute;
+            margin-left: 10px;
+            margin-top: 100px;
+            margin-right: 10px;
+            word-break: break-word;
+        }
+
+        .approved-text-hidden-duplicate {
+            margin-top: 500px;
+        }
+
+        /* Style for gray text */
+        .gray-text-duplicate {
+            color: gray;
+        }
+
+        @media only screen and (max-width: 365px) {
+
+            /* Adjust padding for smaller screens */
+            .hidden-text-duplicate {
+                padding-right: 20%;
+                max-width: calc(100% - 40px);
+                /* Adjust maximum width */
+                margin-left: 20px;
+                /* Adjust left margin */
+                margin-right: 20px;
+                /* Adjust right margin */
+                margin-top: 90px;
+            }
+
+            /* Allow email addresses to break in the middle */
+            .hidden-text-duplicate .gray-text-duplicate span.email-address-duplicate {
+                overflow-wrap: break-word;
+                word-break: break-all;
+            }
+        }
+
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            background-color: #ffffff;
+            /* Remove overflow-x property */
+            width: 100%;
+            /* Set the width to 365px */
+            height: 100%;
+        }
+
+        .bottom-task-bar {
+            margin-top: 100px;
+            position: fixed;
+            /* Adjust the margin-top value to decrease the size */
+        }
+
+        .bottom-task-bar-icons {
+            display: flex;
+
+            margin-left: 90px;
+            /* Use flexbox */
+        }
+
+        .bottom-icon1 {
+            background-color: #c3e7ff;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            border-radius: 10px;
+            width: 40px;
+            /* Adjust width as needed */
+            height: 40px;
+            /* Adjust height as needed */
+            margin-top: 10px;
+            /* Adjust margin as needed for spacing */
+            margin-right: 100px;
+            /* Add margin between icons */
+        }
+
+        .bottom-icon2 {
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            border-radius: 10px;
+            width: 40px;
+            /* Adjust width as needed */
+            height: 40px;
+            /* Adjust height as needed */
+            margin-top: 10px;
+            /* Adjust margin as needed for spacing */
+            margin-right: 10px;
+            /* Add margin between icons */
+        }
+
+        .container {
+            margin-top: 500px;
+            display: flex;
+        }
+
+        .box {
+            width: 30%;
+            margin: 10px;
+            border: 1px solid black;
+            border-radius: 20px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .blue-text {
+            font-size: 13px;
+            color: blue;
+        }
+
+  
+  .reply-container {
+      max-width: 365px;
+      margin-left: 0px; /* Add margin between container and the left edge */
+      display: flex;
+      justify-content: space-between;
+    }
+    .curved-box {
+      font-family: sans-serif;
+      background-color: white;
+      border: 1px solid #808080; /* Add border with gray color */
+      padding: 15px;
+      padding-left: 0px;
+      margin-left: 10px;
+      border-radius: 60px;
+      width: calc((100% - 20px * 2) / 3);
+    }
+    .curved-box:not(:last-child) {
+      margin-right: 10px; /* Add margin between each curved box */
+    }
+    .icon-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row; /* Align icon and text horizontally */
+    }
+    .icon-container span {
+      margin-left: 5px; /* Add space between icon and text */
+      color: #808080;
+      font-size: 12px;
+    }
+    </style>
+</head>
+
+<body class="body">
+
+    <div class="task-bar" id="top-taskbar">
+        <div class="task-bar-icons">
+            <a href="#">
+                <span class="material-symbols-outlined">&#xe5c4;</span>
+            </a>
+        </div>
+        <div class="task-bar-icons">
+            <a href="#">
+                <span class="material-symbols-outlined">&#xe149;</span>
+            </a>
+            <a href="#">
+                <span class="material-symbols-outlined">&#xe872;</span>
+            </a>
+            <a href="#">
+                <span class="material-symbols-outlined">&#xf18a;</span>
+            </a>
+            <!-- Add the custom icon below the reply icon -->
+            <i class="custom-icon fas">&#xf106;</i>
+            <a href="#">
+                <span class="material-symbols-outlined">&#xe5d4;</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="big-text">
+        <span class="subject">Request for Early Departure on Every Wednesday for WIN SEM 2023-2024</span>
+        <span class="label">Inbox</span>
+        <img src="star-icon.png" alt="Star Icon" class="star-icon">
+    </div>
+
+    <div class="circle-container">
+        <div class="circle" style="color: white;">V</div>
+        <p class="circle-text"><b>VINJAMURI PAVAN...</b></p>
+        <span style="margin-top: 23px;margin-left: 5px; font-size: 13px;">Jan 9</span>
+        <span class="reply-icon material-symbols-outlined">&#xe15e;</span>
+        <span class="more-icon material-symbols-outlined">&#xe5d4;</span>
+        <span class="to-text">to Muneeswai</span>
+        <span class="arrow-button down" onclick="toggleText()"></span>
+        <!-- Hidden text to be displayed -->
+        <div id="hiddenText" class="hidden-text" style="display: none;">
+            <!-- Content from your provided HTML code -->
+            <table class="info-table">
+                <tr>
+                    <td><span class="gray-text">From</span></td>
+                    <td>VINJAMURI PAVAN 21BCE8452 <span class="gray-text">• <span
+                                class="email-address">pavan.21bce8452@vitapstudent.ac.in</span></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="gray-text">To</span></td>
+                    <td>Muneeswari G <span class="gray-text">• <span
+                                class="email-address">muneeswari.g@vitap.ac.in</span></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="gray-text">Date</span></td>
+                    <td><span class="date"> Jan 9, 2024, 8:08 AM </span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <i style='font-size:15px' class='fas gray-lock'>&#xf023;<span class="hole"></span></i>
+                    <td>Standard encryption (TLS). <span style="color: rgb(0, 0, 255);"><br>View security details</span>
+                    </td>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="mail-text">
+        <p>Respected Madam,</p>
+        <p>This is V. Pavan (21BCE8452) your mentee. I am writing to seek your permission to leave the college premises
+            by 11 am every Wednesday, starting from tomorrow. This request is in line with the completion of my classes
+            by that time. I believe this adjustment will not interfere with my academic commitments, and I assure you
+            that any missed coursework or responsibilities will be promptly addressed. I appreciate your understanding
+            and consideration of this matter. Thank you for your time, and I look forward to your approval.</p>
+        <p>Best regards,<br>Vinjamuri Pavan<br>21BCE8452.</p>
+    </div>
+    <p id="line" style="margin-top: 350px; color: rgb(207, 206, 206);">
+        ________________________________________________________<br></p>
+
+    <div class="body2">
+        <div class="circle-container-duplicate">
+            <div class="circle-duplicate" style="color: white;">M</div>
+            <span class="circle-text-duplicate"><b>Muneeswai G</b></span>
+            <span style="margin-top: 25px;margin-left: 8px; margin-right: 55px; font-size: 13px;">Jan 9</span>
+            <!-- Replace reply icon -->
+            <span class="reply-icon-duplicate material-symbols-outlined">&#xe15e;</span>
+            <!-- Replace more icon -->
+            <span class="more-icon-duplicate material-symbols-outlined">&#xe5d4;</span>
+            <span class="to-text-duplicate">to me</span>
+            <span class="arrow-button-duplicate down-duplicate" onclick="toggleTextDuplicate()"></span>
+            <!-- Hidden text to be displayed -->
+            <div id="hiddenTextDuplicate" class="hidden-text-duplicate" style="display: none;">
+                <!-- Content from your provided HTML code -->
+                <table class="info-table-duplicate">
+                    <tr>
+                        <td><span class="gray-text-duplicate">From</span></td>
+                        <td><span>Muneeswari G <span class="email-address-duplicate" style="color: gray;">•
+                                    muneeswari.g@vitap.ac.in</span></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="gray-text-duplicate">To</span></td>
+                        <td><span>VINJAMURI PAVAN 21BCE8452 • <span class="email-address-duplicate"
+                                    style="color: gray;">pavan.21bce8452@vitapstudent.ac.in</span></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="gray-text-duplicate">Date</span></td>
+                        <td><span> Jan 9, 2024, 10:20 AM </span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <i style='font-size:20px' class='fas gray-lock-duplicate'>&#xe897;<span
+                                    class="hole-duplicate"></span></i>
+                        <td>Standard encryption (TLS). <span style="color: rgb(0, 0, 255);"><br>View security
+                                details</span>
+                        </td>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <p id="approved-text-duplicate"
+            style="font-size: small; position: absolute; margin-top: 180px; margin-left: 20px;">
+            Approved.<br><br><span style="font-size: 
+        small; color: blue;">Show quoted text</span></p>
+
+
+        <div class="bottom-task-bar" id="bottom-taskbar">
+            <div class="bottom-task-bar-icons">
+                <a class="bottom-icon1">
+                    <span class="material-symbols-outlined">&#xe158;</span>
+                </a>
+                <a class="bottom-icon2">
+                    <span class="material-symbols-outlined">&#xe04b;</span>
+                </a>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <div class="box">
+                <p class="blue-text">Thank you for your support.</p>
+            </div>
+            <div class="box">
+                <p class="blue-text">Thank you for your response.</p>
+            </div>
+            <div class="box">
+                <p class="blue-text">Thank you for informing me.</p>
+            </div>
+        </div>
+        <p id="line2" style="margin-top: 0px; color: rgb(207, 206, 206);">
+            ________________________________________________________<br></p>
+        <div class="reply-container">
+            <div class="curved-box">
+              <div class="icon-container">
+                <span class="material-symbols-outlined">&#xe15e;</span>
+                <span>Reply</span>
+              </div>
+            </div>
+            <div class="curved-box">
+              <div class="icon-container">
+                <span class="material-symbols-outlined">&#xe15f;</span>
+                <span>Reply All</span>
+              </div>
+            </div>
+            <div class="curved-box">
+              <div class="icon-container">
+                <span class="material-symbols-outlined">&#xe154;</span>
+                <span>Forward</span>
+              </div>
+            </div>
+          </div>
+
+        <script>
+            function toggleText() {
+                var text = document.getElementById("hiddenText");
+                var icon = document.querySelector('.arrow-button');
+                var mailText = document.querySelector('.mail-text');
+                var line = document.getElementById('line');
+
+                if (text.style.display === "none" || text.style.display === "") {
+                    text.style.display = "block";
+                    icon.classList.remove('down');
+                    icon.classList.add('up');
+                    mailText.classList.add('mail-text-hidden');
+                    line.style.marginTop = '520px';
+                } else {
+                    text.style.display = "none";
+                    icon.classList.remove('up');
+                    icon.classList.add('down');
+                    mailText.classList.remove('mail-text-hidden');
+                    line.style.marginTop = '350px';
+                }
+            }
+
+            function toggleTextDuplicate() {
+                var text = document.getElementById("hiddenTextDuplicate");
+                var icon = document.querySelector('.arrow-button-duplicate');
+                var mailText = document.getElementById("approved-text-duplicate");
+
+                if (text.style.display === "none" || text.style.display === "") {
+                    text.style.display = "block";
+                    icon.classList.remove('down-duplicate');
+                    icon.classList.add('up-duplicate');
+                    mailText.style.marginTop = text.offsetHeight + 195 + "px"; // Adjust the margin-top dynamically
+                } else {
+                    text.style.display = "none";
+                    icon.classList.remove('up-duplicate');
+                    icon.classList.add('down-duplicate');
+                    mailText.style.marginTop = "180px"; // Reset the margin-top when hidden
+                }
+            }
+
+            window.onscroll = function () { scrollFunction() };
+
+            function scrollFunction() {
+                var footer = document.getElementById("thanks-footer");
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("top-taskbar").style.backgroundColor = "#f2f2f2";
+                    document.getElementById("bottom-taskbar").style.backgroundColor = "#f2f2f2";
+                } else {
+                    document.getElementById("top-taskbar").style.backgroundColor = "#ffffff";
+                    document.getElementById("bottom-taskbar").style.backgroundColor = "#f2f2f2";
+                }
+            }
+        </script>
+
+
+</body>
+
+</html>
